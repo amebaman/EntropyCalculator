@@ -1,2 +1,3 @@
 # EntropyCalculator
-A little webpage thing to estimate the entropy of (various subsets of) the English language based on user knowledge.
+
+A little webpage to estimate the entropy of (various subsets of) the English language based on user knowledge.
