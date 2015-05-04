@@ -1,0 +1,9 @@
+// buffy quick fixing
+
+//removes name and two spaces: sed -r 's/.*\:\ \ //'  <buffy-season-1.txt >out
+//removes~~~~~title~~~~~: sed -r '/\~|\-/d' <buffy-season-1.txt >out
+//replaces literally &#8230; with elipses which I believe is ellipses:  sed -r 's/\&\#8230;/\.\.\./g' 
+//removes leading capital titles: sed -r 's/^([A-Z]*\ )*//' 
+//converts ? in the middle of words to " I could quite get ': sed -r 's/([a-zA-Z]+)\?([a-zA-Z]+)/\1\"\2/g'
+//Also deleted all lines in brackets (time lapse in friends: sed -r '/\[.*\]/d'
+//Removing names for shakespeare: sed -r 's/^([A-Z])+.*\.//'
