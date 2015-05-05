@@ -28,12 +28,14 @@ Click me to start the game. </button>
 
 <div id="StringDisplay"></div>
 
-<script>
+<script type = text/javascript>
+    var sentence;
     // this basically grabs the sentence from the json and puts it into the "sentence" variable
     $.getJSON("data.json", function (data) {
-        sentence = data.result[0];
+	console.log(data.sentence);
+        sentence = data.sentence;
+	document.getElementById("StringDisplay").innerHTML=sentence; // sets the StringDisplay div to sentence
     });
-    document.getElementById("StringDisplay").innerHTML=sentence; // sets the StringDisplay div to sentence
 </script>
 
 </center>
