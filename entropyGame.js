@@ -3,25 +3,25 @@
 function Game(sentence) {
 	var done = false;       //true iff we've guessed the whole sentence
 	var index = 0;  //the index in sentence that we're focusing on
-	var capsConst = (int)('A' - 'a');       //constant used to make the sentence uniform case for guessing purposes
+	var capsConst = 'A' - 'a';       //constant used to make the sentence uniform case for guessing purposes
 	var displayString = "";        //the portion of the sentence that we "know" and are going to display
-	var guessChar : char;   //the current guess being processed (given by user)
-	var answer : char;      //the correct guess
+	var guessChar;   //the current guess being processed (given by user)
+	var answer;      //the correct guess
 	var validinput = false; //used to discard weird input like !#@%!@#$^!@#!$@#$!@# or numbers
 	var guessArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];       //guessArray[i] is the number of times it's taken us i+1 guesses to get the answer (in this run of the game)
 	var numTries = 0;       //the number of tries we're on currently
-        var nextChar : char;    //the character we're considering
-        var charInt : int;      //the integer of the character we're considering
+        var nextChar;    //the character we're considering
+        var charInt;      //the integer of the character we're considering
 	while (!done) {
     	    // the next character that's up for guessing
     	    nextChar = sentence.charAt(index);
-    	    charInt = (int)nextChar;
+    	    charInt = nextChar;
     	    // detect whether the next character is a letter or not (condition fails if we have a letter)
     	    while ((charInt < 65 && charInt != 32) || charInt > 122 || (charInt > 90 && charInt < 97)) {
     		displayString += nextChar;      //adds the (punctuation) character to the display string
     		index++;                        //go to next index in source string
     		nextChar = sentence.charAt(index);      //update nextChar
-    		charInt = (int)nextChar;                //and charInt
+    		charInt = nextChar;                //and charInt
     	    }
     	    // if the next letter is uppercase, 
     	    if (nextChar >= 97) {
