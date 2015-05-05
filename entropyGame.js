@@ -1,11 +1,11 @@
 //TODO ADD CALCULATIONARISM FOR THIS TIME AND PASS SHIT TO THE PYTHON FOR BIG CALCULATIONALISTISM
 
 function Game(json) {
-	var sentence : String = json.sentence; //The sentence we're trying to guess.
+	var sentence = json.sentence; //The sentence we're trying to guess.
 	var done = false;       //true iff we've guessed the whole sentence
 	var index = 0;  //the index in sentence that we're focusing on
 	var capsConst = (int)('A' - 'a');       //constant used to make the sentence uniform case for guessing purposes
-	var displayString : String = "";        //the portion of the sentence that we "know" and are going to display
+	var displayString = "";        //the portion of the sentence that we "know" and are going to display
 	var guessChar : char;   //the current guess being processed (given by user)
 	var answer : char;      //the correct guess
 	var validinput = false; //used to discard weird input like !#@%!@#$^!@#!$@#$!@# or numbers
