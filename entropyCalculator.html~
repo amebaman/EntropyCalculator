@@ -38,7 +38,6 @@ button{
 <input type="button" value="State of the Union Address " onclick="myFunction(7);"></input>
 
 <div id="StringDisplay"></div>
-<div id="EntropyDisplay"></div>
 
 
 <script>
@@ -66,7 +65,7 @@ button{
     }
 	$(document).keypress(function(event) {
 		console.log(event.which);
-		if (event.which == 126) {
+		if (event.keyCode == 126) {
 
 	$.getJSON("data.json", function (data) {
 		console.log(choice);
@@ -160,22 +159,10 @@ button{
 		    guessing = true;   
 		}
 
-		function log2(x) {
-		   return  Math.log(x)/Math.log(2);
-		}
-
 		function calculateEntropy() {
-		    var sum=0;
-		for (var i=0; i<27;i++) {
-		    if(guessArray[i]!=0) {
-		    sum+=log2(sentence.length/guessArray[i])*guessArray[i]/sentence.length;
-		    }
+		    console.log("E N T R O P Y B O Y S");
+		    return;
 		}
-		document.getElementById("EntropyDisplay").innerHTML = "The entropy is..."+sum;
-	    //	    console.log(sum);
-	    return;
-	}
-
 	});
 	}
 	});
