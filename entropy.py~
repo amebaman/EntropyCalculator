@@ -43,7 +43,7 @@ def pick(myList):
 			return pick(myList)
 		elif len(selection) < 40:
 			return pick(myList)
-		elif "0" in selection or "1" in selection or "2" in selection or "3" in selection or "4" in selection or "5" in selection or "6" in selection or "7" in selection or "8" in selection or "9" in selection or "'" in selection or "\"" in selection:
+		elif "0" in selection or "1" in selection or "2" in selection or "3" in selection or "4" in selection or "5" in selection or "6" in selection or "7" in selection or "8" in selection or "9" in selection:
 			return pick(myList)
 		else:
 			return clean(selection)
