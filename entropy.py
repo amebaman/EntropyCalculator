@@ -6,26 +6,31 @@
 #to the Javascript portion of the program.
 
 import random
+import json
+import time
 
 #a main method that cleans the file, and parses it out into a list of sentences
 def main():
 	files = ["big-bang-theory-series-1-formatted.txt", "buffy-season-1-formatted.txt", "drseuss-formatted.txt", "friends-season-1-formatted.txt", "mlp-season-1-formatted.txt", "republican-debate-formatted.txt", "shakespeare-partial-formatted.txt", "sotu-obama.txt"]
 	myPicks = []
-	for i in range (0, 8):
-		#open the chosen file
-		print(files[i])
-		startFile = open(files[i], "r")
-		wholeFile = startFile.read()
-		#split into a list of paragraphs
-		paragraphs = wholeFile.splitlines()
-		sentences = []
-		#split into a list of sentences
-		for par in paragraphs:
+	while True:
+	    if time.clock()%2==0:
+		for i in range (0, 8):
+		   #open the chosen file
+		    startFile = open(files[i], "r")
+		    wholeFile = startFile.read()
+		    #split into a list of paragraphs
+		    paragraphs = wholeFile.splitlines()
+		    sentences = []
+		    #split into a list of sentences
+		    for par in paragraphs:
 			sentences.extend(par.split("."))
-		#choose a sentence
-		myPicks.append( pick(sentences) + ".")
+		    #choose a sentence
+		    myPicks.append( pick(sentences) + ".")
+		    with open('data.json', 'w') as outfile:
+			json.dump({'sentences':myPicks}, outfile)
 		print(myPicks)
-	print(myPicks)
+		myPicks=[]
 
 #a method to choose a valid random sentence from the selected file
 def pick(myList):

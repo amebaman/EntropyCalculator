@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<meta charset="utf-8">
 <html>
 <head>
 <script src="jquery-1.11.2.min.js"></script>
@@ -21,12 +22,23 @@ button{
 <h1>Language Entropy Calculator</h1>
 <h2>You have stumbled upon a fantastical Entropy calculator. </h2>
 </header>
+<p>For your amusement, we have provided a variety of corpora for you to choose from. Ideally, we will collect this data and aggregate to determine the entropies of various shows, plays, and other bodies of text. </p>
+<p>We are basing this project off of the UCSD Entropy Calculator, which uses Claude Shannon’s experiment. We are applying the same formula and calculations, but attempting to compare different bases of sentences.</p>
+<p>The inspiration behind this is to determine the differences in entropy between things like “Buffy The Vampire Slayer” and the State of the Union address. In doing so, we can learn a little bit more about what people are naturally and readily able to understand given limited information.</p>
+
 <center>
-<button type="button"
-onclick= "document.getElementById('StringDisplay').innerHTML = Date()">
-Click me to start the game. </button>
+
+<input type="button" value="Big Bang Theory" onclick="myFunction(0)"></input>
+<input type="button" value="Buffy The Vampire Slayer" onclick="myFunction(1);"></input>
+<input type="button" value="Dr. Seuss" onclick="myFunction(2);"></input>
+<input type="button" value="Friends" onclick="myFunction(3);"></input>
+<input type="button" value="My Little Pony" onclick="myFunction(4);"></input>
+<input type="button" value="Republican Debate 2008" onclick="myFunction(5);"></input>
+<input type="button" value="Shakespeare" onclick="myFunction(6);"></input>
+<input type="button" value="State of the Union Address " onclick="myFunction(7);"></input>
 
 <div id="StringDisplay"></div>
+
 
 <script>
     var guess;
@@ -41,102 +53,119 @@ Click me to start the game. </button>
     var displayString = "";
     var entropyCalculated = false;
     var capsConst = 'a'.charCodeAt() - 'A'.charCodeAt();
-    // this basically grabs the sentence from the json and puts it into the "sentence" variable
-    $.getJSON("data.json", function (data) {
-        sentence = data.sentence;
-	console.log(sentence);
+    var choice = 0;
+    var stuffdone = false;
 
+    function myFunction(i) {
+	console.log("OMGWTF");
+	choice=i;
+	var e = jQuery.Event("keypress");
+	e.which = 126;
+	$(document).trigger(e);
+    }
 	$(document).keypress(function(event) {
-	    //console.log("guessing: " + guessing);
-	    //console.log("doneGuessing: " + doneGuessing);
-	    //console.log("keypress");
-	    guessChar = event.key;
-	    console.log(guessChar);
-	    if (done) {
-		//console.log("done");
-		return;
-	    }
-	    if (doneGuessing) {
-		//console.log("doneGuessing");
-		//console.log(doneGuessing);
-		getNextChar();
-		doneGuessing = false;
-	    }
-	    if (!done && guessing) {
-		//console.log("guessing");
-		processGuess();
-	    }
-	});
+		console.log(event.which);
+		if (event.which == 126) {
 
-	function processGuess() {
-	    console.log("processing " + guessChar + " hoping for " + answer);
-	    if ((guessChar < 'A' && guessChar != ' ') || guessChar > 'z' || (guessChar > 'Z' && guessChar < 'a')) {
-		return; // do nothing and wait for real input that doesn't suck
-	    }
-	    if (guessChar == answer) {
-		console.log("answer was " + guessChar);
-		guessArray[numTries]++;
-		if (nextChar != ' ') {
-		    displayString += nextChar;
-		}
-		else {
-		    displayString += '| |';
-		}
-		console.log(displayString);
-		document.getElementById("StringDisplay").innerHTML = displayString;
-		index++;
-		numTries = 1;
-		doneGuessing = true;
-		guessing = false;
-		$(document).keypress();
-	    }
-	    else {
-		numTries++;
-	    }
-	    if (index >= sentence.length) {
-		done = true;
-		if (!entropyCalculated) {
-		    calculateEntropy();
-		    entropyCalculated = true;
-		}
-		return;
-	    }
-	}
+	$.getJSON("data.json", function (data) {
+		console.log(choice);
+		sentence = data.sentences[choice];
+		console.log(sentence);
+		console.log("WHAT");
 
-	function getNextChar() {
-	    nextChar = sentence.charAt(index);
-	    answer = nextChar; 
-	    while ((nextChar < 'A' && nextChar != ' ') || nextChar > 'z' || (nextChar > 'Z' && nextChar < 'a')) {
-		console.log(nextChar + " rejected");
-		displayString = displayString + nextChar;
-		document.getElementById("StringDisplay").innerHTML = displayString;
-		index++;
-		if (index >= sentence.length) {
-		    done =true;
-		    if (!entropyCalculated) {
-		        calculateEntropy();
-		    entropyCalculated = true;
+		$(document).keypress(function(event) {
+		    //console.log("guessing: " + guessing);
+		    //console.log("doneGuessing: " + doneGuessing);
+		    //console.log("keypress");
+		    guessChar = event.key;
+		    console.log(guessChar);
+		    if (done) {
+			//console.log("done");
+			return;
+		    }
+		    if (doneGuessing) {
+			//console.log("doneGuessing");
+			//console.log(doneGuessing);
+			getNextChar();
+			doneGuessing = false;
+		    }
+		    if (!done && guessing) {
+			//console.log("guessing");
+			processGuess();
+		    }
+		});
+
+		function processGuess() {
+		    console.log("processing " + guessChar + " hoping for " + answer);
+		    if ((guessChar < 'A' && guessChar != ' ') || guessChar > 'z' || (guessChar > 'Z' && guessChar < 'a')) {
+			console.log("BAD GUESS FUCK YOU");			
+			return; // do nothing and wait for real input that doesn't suck
+		    }
+		    console.log("answer is " + answer);
+		    if (guessChar == answer) {
+			console.log("answer was " + guessChar);
+			guessArray[numTries - 1]++;
+			if (nextChar != ' ') {
+			    displayString += nextChar;
+			}
+			else {
+			    displayString += '| |';
+			}
+			console.log(displayString);
+			document.getElementById("StringDisplay").innerHTML = displayString;
+			index++;
+			numTries = 1;
+			doneGuessing = true;
+			guessing = false;
+			console.log("fucking extra keypress wheeeeeeee")
+			$(document).keypress();
+		    }
+		    else {
+			numTries++;
+		    }
+		    if (index >= sentence.length) {
+			done = true;
+			if (!entropyCalculated) {
+			    calculateEntropy();
+			    entropyCalculated = true;
+			}
+			return;
+		    }
+		    //guessChar = '';
 		}
+
+		function getNextChar() {
+		    nextChar = sentence.charAt(index);
+		    answer = nextChar; 
+		    while ((nextChar < 'A' && nextChar != ' ') || nextChar > 'z' || (nextChar > 'Z' && nextChar < 'a')) {
+			console.log(nextChar + " rejected");
+			displayString = displayString + nextChar;
+			document.getElementById("StringDisplay").innerHTML = displayString;
+			index++;
+			if (index >= sentence.length) {
+			    done =true;
+			    if (!entropyCalculated) {
+				calculateEntropy();
+			    entropyCalculated = true;
+			}
+			    return;
+			}
+			nextChar = sentence.charAt(index);
+			answer = nextChar;
+		    }
+		    if (nextChar.charCodeAt() < 'a'.charCodeAt() && nextChar != ' ') {
+			answer = String.fromCharCode(nextChar.charCodeAt() + capsConst);
+		    }
+		    guessing = true;   
+		}
+
+		function calculateEntropy() {
+		    console.log("E N T R O P Y B O Y S");
 		    return;
 		}
-		nextChar = sentence.charAt(index);
-		answer = nextChar;
-	    }
-	    if (nextChar.charCodeAt() < 'a'.charCodeAt() && nextChar != ' ') {
-		answer = String.fromCharCode(nextChar.charCodeAt() + capsConst);
-	    }
-	    guessing = true;   
+	});
 	}
-
-	function calculateEntropy() {
-	    console.log("E N T R O P Y B O Y S");
-	    return;
-	}
-
-	//console.log(data.sentence);
-        //sentence = data.sentence;
-	//document.getElementById("StringDisplay").innerHTML=sentence; // sets the StringDisplay div to sentence
-    });
+	});
 </script>
 
 </center>
