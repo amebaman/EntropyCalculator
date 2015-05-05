@@ -17,7 +17,6 @@ def main():
 	    if time.clock()%2==0:
 		for i in range (0, 8):
 		   #open the chosen file
-#print(files[i])
 		    startFile = open(files[i], "r")
 		    wholeFile = startFile.read()
 		    #split into a list of paragraphs
@@ -32,7 +31,6 @@ def main():
 			json.dump({'sentences':myPicks}, outfile)
 		print(myPicks)
 		myPicks=[]
-#print(myPicks)
 
 #a method to choose a valid random sentence from the selected file
 def pick(myList):
