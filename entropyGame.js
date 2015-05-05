@@ -1,7 +1,6 @@
 //TODO ADD CALCULATIONARISM FOR THIS TIME AND PASS SHIT TO THE PYTHON FOR BIG CALCULATIONALISTISM
 
-function Game(json) {
-	var sentence = json.sentence; //The sentence we're trying to guess.
+function Game(sentence) {
 	var done = false;       //true iff we've guessed the whole sentence
 	var index = 0;  //the index in sentence that we're focusing on
 	var capsConst = (int)('A' - 'a');       //constant used to make the sentence uniform case for guessing purposes
