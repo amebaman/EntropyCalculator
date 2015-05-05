@@ -22,20 +22,35 @@ button{
 <h2>You have stumbled upon a fantastical Entropy calculator. </h2>
 </header>
 <center>
-<button type="button"
-onclick= "document.getElementById('entropyGame').innerHTML = Date()">
-Click me to start the game. </button>
+
+
+<input type="button" value="Big Bang Theory" onclick="myFunction(0)"></input>
+<input type="button" value="Buffy The Vampire Slayer" onclick="myFunction(1);"></input>
+<input type="button" value="Dr. Seuss" onclick="myFunction(2);"></input>
+<input type="button" value="Friends" onclick="myFunction(3);"></input>
+<input type="button" value="My Little Pony" onclick="myFunction(4);"></input>
+<input type="button" value="Republican Debate 2008" onclick="myFunction(5);"></input>
+<input type="button" value="Shakespeare" onclick="myFunction(6);"></input>
+<input type="button" value="State of the Union Address " onclick="myFunction(7);"></input>
 
 <div id="StringDisplay"></div>
 
+
 <script type = text/javascript>
-    var sentence;
-    // this basically grabs the sentence from the json and puts it into the "sentence" variable
-    $.getJSON("data.json", function (data) {
-	console.log(data.sentence);
-        sentence = data.sentence;
-	document.getElementById("StringDisplay").innerHTML=sentence; // sets the StringDisplay div to sentence
-    });
+    var sentences;
+    var choice
+    function myFunction(i) {
+	choice=i;
+	console.log(i);
+	grabSentence(i);
+    }
+    function grabSentence(i) {
+	    // this basically grabs the sentence from the json and puts it into the "sentence" variable
+	$.getJSON("data.json", function (data) {
+	      sentences = data.sentences[choice];
+	    document.getElementById("StringDisplay").innerHTML=sentences; // sets the StringDisplay div to sentence
+	});
+    }
 </script>
 
 </center>

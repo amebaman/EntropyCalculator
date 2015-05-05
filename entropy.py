@@ -6,6 +6,7 @@
 #to the Javascript portion of the program.
 
 import random
+import json
 
 #a main method that cleans the file, and parses it out into a list of sentences
 def main():
@@ -24,6 +25,8 @@ def main():
 			sentences.extend(par.split("."))
 		#choose a sentence
 		myPicks.append( pick(sentences) + ".")
+		with open('data.json', 'w') as outfile:
+		    json.dump({'sentences':myPicks}, outfile)
 		print(myPicks)
 	print(myPicks)
 
