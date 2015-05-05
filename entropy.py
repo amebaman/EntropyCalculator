@@ -27,10 +27,10 @@ def main():
 					sentences.extend(par.split("."))
 				#choose a sentence
 				myPicks.append( pick(sentences) + ".")
-				with open('data.json', 'w') as outfile:
-					json.dump({'sentences':myPicks}, outfile)
-				print(myPicks)
-				myPicks=[]
+			with open('data.json', 'w') as outfile:
+			    json.dump({'sentences':myPicks}, outfile)
+#print(myPicks)
+			myPicks=[]
 
 #a method to choose a valid random sentence from the selected file
 def pick(myList):
