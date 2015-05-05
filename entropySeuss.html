@@ -27,6 +27,8 @@ button{
 <center>
 <div id="StringDisplay"></div>
 <div id="EntropyDisplay"></div>
+<div id="TriesDisplay"></div>
+<div id="GuessesDisplay"></div>
 </center>
 <script>
     var guess;
@@ -37,11 +39,13 @@ button{
     var index = 0;
     var answer;
     var numTries = 1;
+    document.getElementById("TriesDisplay").innerHTML = "Attempt: " + numTries;
     var guessArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
     var displayString = "";
     var entropyCalculated = false;
     var capsConst = 'a'.charCodeAt() - 'A'.charCodeAt();
     var stuffdone = false;
+    var guessesString = "";
 	$.getJSON("data.json", function (data) {
 		//console.log(choice);
 		sentence = data.sentences[2];
@@ -89,14 +93,24 @@ button{
 			console.log(displayString);
 			document.getElementById("StringDisplay").innerHTML = displayString;
 			index++;
-			numTries = 1;
+			numTries = 0;
+			document.getElementById("TriesDisplay").innerHTML = "Attempt: " + numTries;
+			guessesString = "";
+			document.getElementById("GuessesDisplay").innerHTML = "Already tried: " + guessesString;
 			doneGuessing = true;
 			guessing = false;
 			console.log("fucking extra keypress wheeeeeeee")
 			$(document).keypress();
 		    }
 		    else {
-			numTries++;
+			if (numTries < 27) {
+        		    numTries++;
+			}
+			document.getElementById("TriesDisplay").innerHTML = "Attempt: " + numTries;
+			if (numTries != 1) {
+			    guessesString = guessesString + guessChar;
+			    document.getElementById("GuessesDisplay").innerHTML = "Already tried: " + guessesString;
+			}
 		    }
 		    if (index >= sentence.length) {
 			done = true;

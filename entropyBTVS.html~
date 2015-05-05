@@ -16,12 +16,19 @@ button{
 }
 
 </style>
+<h1>Language Entropy Calculator</h1>
+<h2>Buffy the Vampire Slayer Edition. </h2>
+<form action="entropyCalculator.html">
+   <input type="submit" value="Home">
+   </form>
 </head>
 <body>
-<p>To play, simply press the key corresponding to the letter (or space) that you think will appear next in the randomly selected sentence from The Big Bang Theory.  Ignore capitalization.  Once you've guessed the whole sentence, we'll calculate an approximation of the entropy of the passage based on your success.</p>
+<p>To play, simply press the key corresponding to the letter (or space) that you think will appear next in the randomly selected sentence from Buffy The Vampire Slayer.  Ignore capitalization.  Once you've guessed the whole sentence, we'll calculate an approximation of the entropy of the passage based on your success.</p>
 <center>
 <div id="StringDisplay"></div>
 <div id="EntropyDisplay"></div>
+<div id="TriesDisplay"></div>
+<div id="GuessesDisplay"></div>
 </center>
 <script>
     var guess;
@@ -32,14 +39,16 @@ button{
     var index = 0;
     var answer;
     var numTries = 1;
+    document.getElementById("TriesDisplay").innerHTML = "Attempt: " + numTries;
     var guessArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
     var displayString = "";
     var entropyCalculated = false;
     var capsConst = 'a'.charCodeAt() - 'A'.charCodeAt();
     var stuffdone = false;
+    var guessesString = "";
 	$.getJSON("data.json", function (data) {
 		//console.log(choice);
-		sentence = data.sentences[0];
+		sentence = data.sentences[1];
 		console.log(sentence);
 		console.log("WHAT");
 
@@ -84,14 +93,22 @@ button{
 			console.log(displayString);
 			document.getElementById("StringDisplay").innerHTML = displayString;
 			index++;
-			numTries = 1;
+			numTries = 0;
+			document.getElementById("TriesDisplay").innerHTML = "Attempt: " + numTries;
+			guessesString = "";
+			document.getElementById("GuessesDisplay").innerHTML = "Already tried: " + guessesString;
 			doneGuessing = true;
 			guessing = false;
 			console.log("fucking extra keypress wheeeeeeee")
 			$(document).keypress();
 		    }
 		    else {
-			numTries++;
+			if (numTries < 27) {
+        		    numTries++;
+			}
+			document.getElementById("TriesDisplay").innerHTML = "Attempt: " + numTries;
+			guessesString += guessChar;
+			document.getElementById("GuessesDisplay").innerHTML = "Already tried: " + guessesString;
 		    }
 		    if (index >= sentence.length) {
 			done = true;

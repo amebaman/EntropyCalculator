@@ -29,7 +29,9 @@ function processGuess() {
         guessing = false;
     }
     else {
-        numTries++;
+	if (numTries < 27) {
+        	numTries++;
+	}
     }
     if (index >= sentence.length()) {
         done = true;
