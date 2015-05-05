@@ -24,7 +24,6 @@ def main():
 			sentences.extend(par.split("."))
 		#choose a sentence
 		myPicks.append( pick(sentences) + ".")
-		print(myPicks)
 	print(myPicks)
 
 #a method to choose a valid random sentence from the selected file
