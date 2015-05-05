@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<head>
+<script src="jquery-1.11.2.min.js"></script>
+<!--<script src="entropyGame.js"></script> -->
+<style>
+body{
+	background-color: #4D70BD
+}
+header{
+	text-align: center 
+}
+button{
+	display: table;
+}
+
+</style>
+</head>
+<body>
+<p>To play, simply press the key corresponding to the letter (or space) that you think will appear next in the randomly selected sentence from The Big Bang Theory.  Ignore capitalization.  Once you've guessed the whole sentence, we'll calculate an approximation of the entropy of the passage based on your success.</p>
+<div id="StringDisplay"></div>
+<div id="EntropyDisplay"></div>
+<script>
+    var guess;
+    var sentence;
+    var done = false;
+    var doneGuessing = true;
+    var guessing = false;
+    var index = 0;
+    var answer;
+    var numTries = 1;
+    var guessArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    var displayString = "";
+    var entropyCalculated = false;
+    var capsConst = 'a'.charCodeAt() - 'A'.charCodeAt();
+    var stuffdone = false;
+	$.getJSON("data.json", function (data) {
+		//console.log(choice);
+		sentence = data.sentences[0];
+		console.log(sentence);
+		console.log("WHAT");
+
+		$(document).keypress(function(event) {
+		    //console.log("guessing: " + guessing);
+		    //console.log("doneGuessing: " + doneGuessing);
+		    //console.log("keypress");
+		    guessChar = event.key;
+		    console.log(guessChar);
+		    if (done) {
+			//console.log("done");
+			return;
+		    }
+		    if (doneGuessing) {
+			//console.log("doneGuessing");
+			//console.log(doneGuessing);
+			getNextChar();
+			doneGuessing = false;
+		    }
+		    if (!done && guessing) {
+			//console.log("guessing");
+			processGuess();
+		    }
+		});
+
+		function processGuess() {
+		    console.log("processing " + guessChar + " hoping for " + answer);
+		    if ((guessChar < 'A' && guessChar != ' ') || guessChar > 'z' || (guessChar > 'Z' && guessChar < 'a')) {
+			console.log("BAD GUESS FUCK YOU");			
+			return; // do nothing and wait for real input that doesn't suck
+		    }
+		    console.log("answer is " + answer);
+		    if (guessChar == answer) {
+			console.log("answer was " + guessChar);
+			guessArray[numTries - 1]++;
+			if (nextChar != ' ') {
+			    displayString += nextChar;
+			}
+			else {
+			    displayString += '| |';
+			}
+			console.log(displayString);
+			document.getElementById("StringDisplay").innerHTML = displayString;
+			index++;
+			numTries = 1;
+			doneGuessing = true;
+			guessing = false;
+			console.log("fucking extra keypress wheeeeeeee")
+			$(document).keypress();
+		    }
+		    else {
+			numTries++;
+		    }
+		    if (index >= sentence.length) {
+			done = true;
+			if (!entropyCalculated) {
+			    calculateEntropy();
+			    entropyCalculated = true;
+			}
+			return;
+		    }
+		    //guessChar = '';
+		}
+
+		function getNextChar() {
+		    nextChar = sentence.charAt(index);
+		    answer = nextChar; 
+		    while ((nextChar < 'A' && nextChar != ' ') || nextChar > 'z' || (nextChar > 'Z' && nextChar < 'a')) {
+			console.log(nextChar + " rejected");
+			displayString = displayString + nextChar;
+			document.getElementById("StringDisplay").innerHTML = displayString;
+			index++;
+			if (index >= sentence.length) {
+			    done =true;
+			    if (!entropyCalculated) {
+				calculateEntropy();
+			    entropyCalculated = true;
+			}
+			    return;
+			}
+			nextChar = sentence.charAt(index);
+			answer = nextChar;
+		    }
+		    if (nextChar.charCodeAt() < 'a'.charCodeAt() && nextChar != ' ') {
+			answer = String.fromCharCode(nextChar.charCodeAt() + capsConst);
+		    }
+		    guessing = true;   
+		}
+
+		function log2(x) {
+		   return  Math.log(x)/Math.log(2);
+		}
+
+		function calculateEntropy() {
+		    var sum=0;
+		for (var i=0; i<27;i++) {
+		    if(guessArray[i]!=0) {
+		    sum+=log2(sentence.length/guessArray[i])*guessArray[i]/sentence.length;
+		    }
+		}
+		document.getElementById("EntropyDisplay").innerHTML = "The entropy is..."+sum;
+	    //	    console.log(sum);
+	    return;
+	}
+
+	});
+</script>
+</body>
