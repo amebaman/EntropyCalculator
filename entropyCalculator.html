@@ -41,10 +41,7 @@ button{
     var choice
     function myFunction(i) {
 	choice=i;
-	console.log(i);
-	grabSentence(i);
-    }
-    function grabSentence(i) {
+	//console.log(i);
 	    // this basically grabs the sentence from the json and puts it into the "sentence" variable
 	$.getJSON("data.json", function (data) {
 	      sentences = data.sentences[choice];
