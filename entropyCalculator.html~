@@ -17,7 +17,7 @@ button{
 
 </style>
 </head>
-<body >
+<body>
 <header style= "font-family: symbol;">
 <h1>Language Entropy Calculator</h1>
 <h2>You have stumbled upon a fantastical Entropy calculator. </h2>
@@ -31,8 +31,12 @@ button{
 <form action="entropyBBT.html">
     <input type="submit" value="Big Bang Theory">
 </form>
-<input type="button" value="Buffy The Vampire Slayer" onclick="myFunction(1);"></input>
-<input type="button" value="Dr. Seuss" onclick="myFunction(2);"></input>
+<form action="entropyBTVS.html">
+    <input type="submit" value="Buffy the Vampire Slayer">
+</form>
+<form action="entropySeuss.html">
+    <input type="submit" value="Dr. Seuss">
+</form>
 <input type="button" value="Friends" onclick="myFunction(3);"></input>
 <input type="button" value="My Little Pony" onclick="myFunction(4);"></input>
 <input type="button" value="Republican Debate 2008" onclick="myFunction(5);"></input>
